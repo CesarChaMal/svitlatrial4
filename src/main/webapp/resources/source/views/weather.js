@@ -17,9 +17,18 @@ var WeatherView = Backbone.View.extend({
   },
 
   savesvitla:function(){
-      $.get( "http://localhost:9966/svitla/weathers/new", function( data ) {
-        $( ".save" ).html( data );
-        alert( "Load was performed." );
-      });
+      $.ajax({
+          type: "POST",
+          url: "http://localhost:9966/svitla/weathers/new",
+          dataType: 'json',
+          data: {
+              city: $("tr:nth-child(2)").find('td:nth-child(2)').html(),
+              temp: $("tr").find('td:nth-child(2)').html()
+          },
+          success:function( data ) {
+              $( ".save" ).html( data );
+              alert( "Load was performed." );
+          }
+      })
   }
 });

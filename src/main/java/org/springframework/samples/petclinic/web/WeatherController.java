@@ -23,6 +23,7 @@ import org.springframework.samples.petclinic.service.WeatherService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 
@@ -38,15 +39,12 @@ public class WeatherController {
         this.clinicService = clinicService;
     }
 
-    @RequestMapping(value = "/weathers/new", method = RequestMethod.GET)
+    @RequestMapping(value = "/weathers/new", method = RequestMethod.POST)
     @ResponseBody
-    public String initCreationForm(Map<String, Object> model) {
+    public String initCreationForm(@RequestParam String city,@RequestParam String temp) {
         Weather weather = new Weather();
-        weather.setId(9);
-        weather.setCity("Kiev");
-        weather.setTemp("1");
-        
-        model.put("owner", weather);
+        weather.setCity(city);
+        weather.setTemp(temp);
         this.clinicService.saveOwner(weather);
        
         return index;
