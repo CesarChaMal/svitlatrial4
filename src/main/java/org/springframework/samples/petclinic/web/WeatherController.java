@@ -13,39 +13,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.svitla.web;
+package org.springframework.samples.petclinic.web;
 
 import java.util.Map;
 
-import javax.validation.Valid;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.samples.svitla.service.ClinicService;
+import org.springframework.samples.petclinic.model.Weather;
+import org.springframework.samples.petclinic.service.WeatherService;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- */
+
 @Controller
-public class OwnerController {
+public class WeatherController {
 
-    private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
-    private final ClinicService clinicService;
+    private static final String index = "sucess!";
+    private final WeatherService clinicService;
 
 
     @Autowired
-    public OwnerController(ClinicService clinicService) {
+    public WeatherController(WeatherService clinicService) {
         this.clinicService = clinicService;
     }
 
-    @InitBinder
-    public void setAllowedFields(WebDataBinder dataBinder) {
-        dataBinder.setDisallowedFields("id");
+    @RequestMapping(value = "/weathers/new", method = RequestMethod.GET)
+    @ResponseBody
+    public String initCreationForm(Map<String, Object> model) {
+        Weather weather = new Weather();
+        weather.setId(9);
+        weather.setCity("Kiev");
+        weather.setTemp("1");
+        
+        model.put("owner", weather);
+        this.clinicService.saveOwner(weather);
+       
+        return index;
     }
-
 
 }

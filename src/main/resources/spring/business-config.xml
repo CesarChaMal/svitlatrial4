@@ -40,9 +40,9 @@
                 <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter"
                       p:database="${jpa.database}" p:showSql="${jpa.showSql}"/>
                 <!-- the 'database' parameter refers to the database dialect being used.
-                	By default, Hibernate will use a 'HSQL' dialect because 'jpa.database' has been set to 'HSQL'
+                	By default, Hibernate will use a 'HSQL' dialect because 
+                	'jpa.database' has been set to 'HSQL'
                 	inside file spring/data-access.properties
-
                  -->
             </property>
             <!-- gDickens: BOTH Persistence Unit and Packages to Scan are NOT compatible, persistenceUnit will win -->
@@ -61,23 +61,6 @@
         -->
         <bean class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
 
-    </beans>
-
-    <beans profile="jdbc">
-        <!-- Transaction manager for a single JDBC DataSource (alternative to JTA) -->
-        <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
-              p:dataSource-ref="dataSource"/>
-
-        <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-            <constructor-arg ref="dataSource"/>
-        </bean>
-
-        <bean id="namedParameterJdbcTemplate"
-              class="org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate">
-            <constructor-arg ref="dataSource"/>
-        </bean>
-
-        <context:component-scan base-package="org.springframework.samples.petclinic.repository.jdbc"/>
     </beans>
 
     <beans profile="jpa">

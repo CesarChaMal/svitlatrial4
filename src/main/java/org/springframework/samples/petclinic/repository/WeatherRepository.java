@@ -13,20 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.service;
+package org.springframework.samples.petclinic.repository;
 
 import org.springframework.dao.DataAccessException;
+import org.springframework.samples.petclinic.model.BaseEntity;
 import org.springframework.samples.petclinic.model.Weather;
 
-
 /**
- * Mostly used as a facade so all controllers have a single point of entry
+ * Repository class for <code>Weather</code> domain objects All method names are compliant with Spring Data naming
+ * conventions so this interface can easily be extended for Spring Data See here: http://static.springsource.org/spring-data/jpa/docs/current/reference/html/jpa.repositories.html#jpa.query-methods.query-creation
  *
  */
-public interface WeatherService {
+public interface WeatherRepository {
 
-
-    void saveOwner(Weather weather) throws DataAccessException;
+  
+    /**
+     * Save an <code>Weather</code> to the data store, either inserting or updating it.
+     *
+     * @param Weather the <code>Weather</code> to save
+     * @see BaseEntity#isNew
+     */
+    void save(Weather weather) throws DataAccessException;
 
 
 }

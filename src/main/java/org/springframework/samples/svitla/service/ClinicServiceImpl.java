@@ -15,45 +15,33 @@
  */
 package org.springframework.samples.svitla.service;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.PetType;
-import org.springframework.samples.petclinic.repository.OwnerRepository;
+import org.springframework.samples.petclinic.model.Weather;
+import org.springframework.samples.petclinic.repository.WeatherRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
- * Mostly used as a facade for all Petclinic controllers
- * Also a placeholder for @Transactional and @Cacheable annotations
- *
- * @author Michael Isvy
  */
 @Service
 public class ClinicServiceImpl implements ClinicService {
 
-    private OwnerRepository ownerRepository;
+    private WeatherRepository ownerRepository;
 
     @Autowired
-    public ClinicServiceImpl( OwnerRepository ownerRepository) {
+    public ClinicServiceImpl( WeatherRepository ownerRepository) {
         this.ownerRepository = ownerRepository;
     }
 
     
     @Override
     @Transactional
-    public void saveOwner(Owner owner) throws DataAccessException {
+    public void saveOwner(Weather owner) throws DataAccessException {
         ownerRepository.save(owner);
     }
 
 
-	@Override
-	public Collection<PetType> findPetTypes() throws DataAccessException {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 
 

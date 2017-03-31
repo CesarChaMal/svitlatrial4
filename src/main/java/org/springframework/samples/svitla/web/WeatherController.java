@@ -15,11 +15,10 @@
  */
 package org.springframework.samples.svitla.web;
 
-import java.util.Map;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.samples.petclinic.model.Weather;
 import org.springframework.samples.svitla.service.ClinicService;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -31,14 +30,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  */
 @Controller
-public class OwnerController {
+public class WeatherController {
 
     private static final String VIEWS_OWNER_CREATE_OR_UPDATE_FORM = "owners/createOrUpdateOwnerForm";
     private final ClinicService clinicService;
 
 
     @Autowired
-    public OwnerController(ClinicService clinicService) {
+    public WeatherController(ClinicService clinicService) {
         this.clinicService = clinicService;
     }
 
@@ -47,5 +46,18 @@ public class OwnerController {
         dataBinder.setDisallowedFields("id");
     }
 
+    @RequestMapping(value = "/weathers/new", method = RequestMethod.POST)
+    public String processCreationForm(@Valid Weather owner, BindingResult result) {
+        if (result.hasErrors()) {
+            return VIEWS_OWNER_CREATE_OR_UPDATE_FORM;
+        } else {
+        	owner.setCity("Kiev");
+        	owner.setTemp("12:23");
+            this.clinicService.saveOwner(owner);
+            return "redirect:/owners/" + owner.getId();
+        }
+    }
+
+    
 
 }

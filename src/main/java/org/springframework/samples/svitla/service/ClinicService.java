@@ -15,11 +15,8 @@
  */
 package org.springframework.samples.svitla.service;
 
-import java.util.Collection;
-
 import org.springframework.dao.DataAccessException;
-import org.springframework.samples.petclinic.model.Owner;
-import org.springframework.samples.petclinic.model.PetType;
+import org.springframework.samples.petclinic.model.Weather;
 
 
 /**
@@ -29,10 +26,9 @@ import org.springframework.samples.petclinic.model.PetType;
  */
 public interface ClinicService {
 
-    Collection<PetType> findPetTypes() throws DataAccessException;
 
 
-    void saveOwner(Owner owner) throws DataAccessException;
+    void saveOwner(Weather owner) throws DataAccessException;
 
 
 }

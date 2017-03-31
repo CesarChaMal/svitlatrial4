@@ -13,33 +13,32 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.springframework.samples.petclinic.service;
+package org.springframework.samples.petclinic.repository.jpa;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.samples.petclinic.model.Weather;
 import org.springframework.samples.petclinic.repository.WeatherRepository;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
+import org.springframework.stereotype.Repository;
 
-@Service
-public class WeatherServiceImpl implements WeatherService {
 
-    private WeatherRepository weatherRepository;
+@Repository
+public class JpaWeatherRepositoryImpl implements WeatherRepository {
 
-	
-    @Autowired
-    public WeatherServiceImpl(WeatherRepository ownerRepository) {
-        this.weatherRepository = ownerRepository;
-    }
+    @PersistenceContext
+    private EntityManager em;
+
 
 
     @Override
-    @Transactional
-    public void saveOwner(Weather owner) throws DataAccessException {
-        weatherRepository.save(owner);
+    public void save(Weather owner) {
+        if (owner.getId() == null) {
+            this.em.persist(owner);
+        } else {
+            this.em.merge(owner);
+        }
+
     }
-
-
 
 }
